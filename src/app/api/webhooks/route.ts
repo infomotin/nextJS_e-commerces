@@ -1,6 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import { declaration } from './../../../../node_modules/prisma/build/index';
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET
@@ -51,6 +52,9 @@ export async function POST(req: Request) {
   const eventType = evt.type
   console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
   console.log('Webhook payload:', body)
-
+if (evt.type === 'user.created' || evt.type === 'user.updated') {
+    const data  = JSON.parse(body).data
+    console.log('userId:', data)
+  }
   return new Response('Webhook received', { status: 200 })
 }
