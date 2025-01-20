@@ -21,11 +21,11 @@ enum Role {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String
-  picture   String?  @default("https://cdn.fakercloud.com/avatars/1.png")
-  role      Role     @default(USER)
+  id      String  @id @default(uuid())
+  email   String  @unique
+  name    String
+  picture String? @default("https://cdn.fakercloud.com/avatars/1.png")
+  role    Role    @default(USER)
 
   // 1:1 relation with Profile
   createdAt DateTime @default(now())
