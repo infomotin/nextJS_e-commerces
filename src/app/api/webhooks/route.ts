@@ -53,7 +53,7 @@ export async function POST(req: Request) {
   // For this guide, log payload to console
   const { id } = evt.data
   const eventType = evt.type
-  
+  //when user is created or updated
 if (evt.type === 'user.created' || evt.type === 'user.updated') {
     const data = JSON.parse(body).data;
     const user:Partial<User>={
@@ -86,6 +86,18 @@ if (evt.type === 'user.created' || evt.type === 'user.updated') {
         role: bdUser.role || 'USER',
       },
     });
+  }
+  //when user is deleted
+  if (evt.type === 'user.deleted') {
+    const userId = JSON.parse(body).data.id;
+    await db.user.delete({ where: { id: userId } });
+
+    //update clerkClient Metadata
+    // (await clerkClient()).users.updateUserMetadata(userId, {
+    //   privateMetadata: {
+    //     role: 'USER', //default role
+    //   },
+    // });
   }
   return new Response('Webhook received', { status: 200 }); 
 }
