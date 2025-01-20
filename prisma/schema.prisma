@@ -24,7 +24,7 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   name      String
-  picture   String?    @default("https://cdn.fakercloud.com/avatars/1.png")
+  picture   String?  @default("https://cdn.fakercloud.com/avatars/1.png")
   role      Role     @default(USER)
 
   // 1:1 relation with Profile
